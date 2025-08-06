@@ -2,14 +2,31 @@ package com.example.API.MODELO.MIERCOLES.modelos;
 
 import com.example.API.MODELO.MIERCOLES.ayudas.EstadosUsuario;
 import com.example.API.MODELO.MIERCOLES.ayudas.RolesUsuario;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name="usuarios")
 public class Usuario {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name="nombre", nullable = false, unique = false, length = 50)
     private String nombre;
+
+    @Column(name="correo", nullable = false, unique = true, length = 80)
     private String correo;
+
+    @Column(name="contraseña", nullable = false, unique = false, length = 10)
     private String contraseña;
+
+    @Column(name="estado", nullable = false, unique = false)
+    @Enumerated(EnumType.STRING)
     private EstadosUsuario estado;
+
+    @Column(name="rol", nullable = false, unique = false)
+    @Enumerated(EnumType.STRING)
     private RolesUsuario rol;
 
     public Usuario() {
