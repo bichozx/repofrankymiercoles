@@ -2,6 +2,7 @@ package com.example.API.MODELO.MIERCOLES.modelos;
 
 import com.example.API.MODELO.MIERCOLES.ayudas.EstadosUsuario;
 import com.example.API.MODELO.MIERCOLES.ayudas.RolesUsuario;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -28,6 +29,18 @@ public class Usuario {
     @Column(name="rol", nullable = false, unique = false)
     @Enumerated(EnumType.STRING)
     private RolesUsuario rol;
+
+    //DESPUES DE LOS ATRIBUTOS Y ANTES DEL CONSTRUCTOR DEFINO LAS RELACIONES
+    //Definiendo una relacion UNO A UNO
+    //1. Para representar en java una relacion de 1 con otra tabla creo una variable
+    //de esa tabla con la que me voy a relacionar
+
+    //2. Identifico el lado principal o manejador de la relacion(La tabla que tiene la FK)
+    //4. Configuro la relacion en el lado NO DOMINANTE
+
+    @OneToOne(mappedBy = "usuario")
+    @JsonBackReference (value = "relacionentreusuarioyestudiante" )
+    public Estudiante estudiante;
 
     public Usuario() {
     }

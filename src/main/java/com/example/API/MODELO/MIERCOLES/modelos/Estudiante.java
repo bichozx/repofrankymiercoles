@@ -2,10 +2,13 @@ package com.example.API.MODELO.MIERCOLES.modelos;
 
 import com.example.API.MODELO.MIERCOLES.ayudas.EstadosUsuario;
 import com.example.API.MODELO.MIERCOLES.ayudas.RolesUsuario;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import javax.annotation.processing.Generated;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "estudiantes")
@@ -23,6 +26,21 @@ public class Estudiante {
     private LocalDate fechaNacimiento;
 
 
+
+
+
+    @OneToOne
+    //3. En la tabla que tiene la FK configuro la relacion con la otra tabla
+    @JoinColumn(name = "fk usuario", referencedColumnName = "id")
+    @JsonManagedReference( value = "relacionentreusuarioyestudiante")
+    private Usuario usuario;
+
+    //CREANDO RELACION DE 1 A MUCHOS
+    //1. Para representar MUCHOS elementos de otra tabla debo crear un arreglo(Lista)
+
+    @OneToOne(mappedBy = "estudiante")
+    @JsonManagedReference(value = "relacionestudianteyasistencia")
+    private ArrayList<Asistencia> asistencias;
     public Estudiante() {
     }
 
@@ -31,6 +49,7 @@ public class Estudiante {
         this.id = id;
         this.promedio = promedio;
         this.fechaNacimiento = fechaNacimiento;
+
     }
 
     public Integer getId() {

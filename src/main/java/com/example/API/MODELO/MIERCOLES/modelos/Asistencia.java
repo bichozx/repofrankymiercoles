@@ -1,6 +1,8 @@
 package com.example.API.MODELO.MIERCOLES.modelos;
 
 import com.example.API.MODELO.MIERCOLES.ayudas.EstadosAsistencia;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -22,6 +24,14 @@ public class Asistencia {
     @Column(name = "estado", nullable = false, unique = false)
     @Enumerated(EnumType.STRING)
     private EstadosAsistencia estado;
+
+    //CREANDO UNA RELACION DE MUCHOS A UNO
+    //2. COMO ME RELACIONO CON 1 SOLO ELEMENTO DE LA OTRA TABLA CREO UNA VARIABLE INDIVIDUAL
+    @ManyToOne
+    //3. Construyo la relacion entre las tablas (Defino la FK)
+    @JoinColumn(name = "fk estudiante", referencedColumnName = "id")
+    @JsonBackReference(value = "relacionestudianteyasistencia")
+    private Estudiante estudiante;
 
 
     public Asistencia(Integer id, LocalDate fecha, String observacion, EstadosAsistencia estado) {
